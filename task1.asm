@@ -7,7 +7,7 @@ PageTabBase2	equ	211000h	; 页表开始地址:		2M + 64K + 4K
 
 LinearAddrDemo	equ	00401000h
 TaskHUST		equ	00401000h
-TaskIS19		equ	00501000h
+TaskMRSU		equ	00501000h
 
 org	0100h
 	jmp	LABEL_BEGIN
@@ -458,9 +458,9 @@ LABEL_SEG_CODE32:
 	call	MemCpy
 	add	esp, 12
 
-	push	LenIS19
-	push	OffsetIS19
-	push	TaskIS19
+	push	LenMRSU
+	push	OffsetMRSU
+	push	TaskMRSU
 	call	MemCpy
 	add	esp, 12
         
@@ -487,7 +487,7 @@ LABEL_SEG_CODE32:
         ; # 配置可编程控制中断器
         call	Init8259A
         sti
-	jmp	SelectorLDTCodeB:0      ; # 进入任务2打印'IS19 '
+	jmp	SelectorLDTCodeB:0      ; # 进入任务2打印'MRSU '
 
 	;call	SetRealmode8259A
 
@@ -578,7 +578,7 @@ ClockHandler	equ	_ClockHandler - $$
         cmp     ax, 0
         jz      .hust   
 
-        mov     byte [current], 0               ; # 当current为1时输出'IS19 '
+        mov     byte [current], 0               ; # 当current为1时输出'MRSU '
         mov	al, 20h
 	out	20h, al				; 发送 EOI
         jmp     SelectorTSSB:0
@@ -680,7 +680,7 @@ SetupPaging:
 	mul	ebx
 	add	eax, ecx
 	add	eax, PageTabBase2
-	mov	dword [es:eax], TaskIS19 | PG_P | PG_USU | PG_RWW
+	mov	dword [es:eax], TaskMRSU | PG_P | PG_USU | PG_RWW
 
         nop
 
@@ -709,22 +709,22 @@ LenHUST	equ	$ - HUST
 ; ---------------------------------------------------------------------------
 
 
-; IS19 -----------------------------------------------------------------------
-IS19:
-OffsetIS19	equ	IS19 - $$
+; MRSU -----------------------------------------------------------------------
+MRSU:
+OffsetMRSU	equ	MRSU - $$
 	mov	ax, SelectorVideo
 	mov	gs, ax			; 视频段选择子(目的)
     mov	ah, 0Ch				; 0000: 黑底    1100: 红字
-	mov	al, 'I'
+	mov	al, 'M'
 	mov	[gs:((80 * 3 + 0) * 2)], ax	; 屏幕第 3 行, 第 0 列。
-	mov	al, 'S'
+	mov	al, 'R'
 	mov	[gs:((80 * 3 + 1) * 2)], ax	; 屏幕第 3 行, 第 1 列。
-	mov	al, '1'
+	mov	al, 'S'
 	mov	[gs:((80 * 3 + 2) * 2)], ax	; 屏幕第 3 行, 第 2 列。
-    mov	al, '9'
+    mov	al, 'U'
 	mov	[gs:((80 * 3 + 3) * 2)], ax	; 屏幕第 3 行, 第 3 列。 
     retf
-LenIS19	equ	$ - IS19
+LenMRSU	equ	$ - MRSU
 ; ---------------------------------------------------------------------------
 
 
