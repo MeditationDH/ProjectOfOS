@@ -1,4 +1,4 @@
-%include	"pm.inc"	; 常量, 宏, 以及一些说明
+%include	"pmtest.inc"	; 常量, 宏, 以及一些说明
 
 PageDirBase1	equ	200000h	; 页目录开始地址:	2M
 PageTabBase1	equ	201000h	; 页表开始地址:		2M +  4K
