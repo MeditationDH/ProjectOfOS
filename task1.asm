@@ -714,7 +714,7 @@ MRSU:
 OffsetMRSU	equ	MRSU - $$
 	mov	ax, SelectorVideo
 	mov	gs, ax			; 视频段选择子(目的)
-    mov	ah, 0Fh				; 0000: 黑底    1100: 红字
+    mov	ah, 0Fh				; 0000: 黑底    1111: 白字
 	mov	al, 'M'
 	mov	[gs:((80 * 3 + 0) * 2)], ax	; 屏幕第 3 行, 第 0 列。
 	mov	al, 'R'
