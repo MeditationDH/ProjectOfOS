@@ -86,6 +86,10 @@ _SavedIDTR:			dd	0	; 用于保存 IDTR
 _SavedIMREG:			db	0	; 中断屏蔽寄存器值
 _current:                       db      0       ; # current记录应该执行task0还是task1
 _MemChkBuf:	times	256	db	0
+_cntVERY db 16
+_cntLOVE db 10
+_cntHUST db 8
+_cntMRSU db 6
 
 ; 保护模式下使用这些符号
 szPMMessage		equ	_szPMMessage	- $$
@@ -106,8 +110,13 @@ SavedIDTR		equ	_SavedIDTR	- $$
 SavedIMREG		equ	_SavedIMREG	- $$
 PageTableNumber		equ	_PageTableNumber- $$
 current                 equ     _current        - $$    ; # current记录应该执行task0还是task1
-
 DataLen			equ	$ - LABEL_DATA
+
+cntVERY 	equ 	_cntVERY - $$
+cntLOVE 	equ 	_cntLOVE - $$
+cntHUST 	equ 	_cntHUST - $$
+cntMRSU 	equ 	_cntMRSU - $$
+
 ; END of [SECTION .data1]
 
 
@@ -748,23 +757,63 @@ io_delay:
 _ClockHandler:
 ClockHandler	equ	_ClockHandler - $$
         push    eax
-        mov     ax, [current]
-        cmp     ax, 0
-        jz      .hust   
+		
+.very:
+		mov 	al, [cntVERY]
+		cmp 	al, 0
+		jz		.love			; 若优先级最高的 VERY 运行完成，运行第二个
+		dec 	al
+		mov 	[cntVERY], al	; 将 cntVERY 减1
+		mov 	al, 20h
+		out 	20h, al			; 发送EOI
+		jmp 	SelectorTSSC:0
+		pop 	eax
+		iretd
 
-        mov     byte [current], 0               ; # 当current为1时输出'MRSU'
-        mov	al, 20h
-	out	20h, al				; 发送 EOI
-        jmp     SelectorTSSB:0
-        pop     eax
-        iretd
-.hust:                                          ; # 当current为0时输出'HUST'
-        mov     byte [current], 1
-        mov	al, 20h
-	out	20h, al				; 发送 EOI
-        jmp     SelectorTSSA:0
-        pop     eax        
-	iretd
+.love:
+		mov 	al, [cntLOVE]
+		cmp 	al, 0
+		jz 		.hust
+		dec 	al
+		mov 	[cntLOVE], al
+		mov 	al, 20h
+		out 	20h, al
+		jmp 	SelectorTSSD:0
+		pop 	eax
+		iretd
+
+.hust:
+		mov 	al, [cntHUST]
+		cmp 	al, 0
+		jz 		.mrsu
+		dec 	al
+		mov 	[cntHUST], al
+		mov 	al, 20h
+		out 	20h, al
+		jmp 	SelectorTSSA:0
+		pop 	eax
+		iretd
+
+.mrsu:
+		mov 	al, [cntMRSU]
+		cmp 	al, 0
+		jz 		.reset
+.reset:
+		mov 	byte [cntVERY], 16
+		mov 	byte [cntLOVE], 10
+		mov 	byte [cntHUST], 8
+		mov 	byte [cntMRSU], 6
+		jmp 	.out
+
+		dec 	al
+		mov 	[cntMRSU], al
+.out:
+		mov 	al, 20h
+		out 	20h, al
+		jmp 	SelectorTSSB:0
+		pop 	eax
+		iretd
+
 ; ---------------------------------------------------------------------------
 
 ; 启动分页机制 --------------------------------------------------------------
