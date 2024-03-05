@@ -1,4 +1,4 @@
-
+# SRC:=pmtest9.asm
 SRC:=task1.asm
 BIN:=$(subst .asm,.com,$(SRC))
 

@@ -96,11 +96,11 @@ dwDispPos		equ	_dwDispPos	- $$
 dwMemSize		equ	_dwMemSize	- $$
 dwMCRNumber		equ	_dwMCRNumber	- $$
 ARDStruct		equ	_ARDStruct	- $$
-	dwBaseAddrLow	equ	_dwBaseAddrLow	- $$
-	dwBaseAddrHigh	equ	_dwBaseAddrHigh	- $$
-	dwLengthLow	equ	_dwLengthLow	- $$
-	dwLengthHigh	equ	_dwLengthHigh	- $$
-	dwType		equ	_dwType		- $$
+dwBaseAddrLow	equ	_dwBaseAddrLow	- $$
+dwBaseAddrHigh	equ	_dwBaseAddrHigh	- $$
+dwLengthLow	equ	_dwLengthLow	- $$
+dwLengthHigh	equ	_dwLengthHigh	- $$
+dwType		equ	_dwType		- $$
 MemChkBuf		equ	_MemChkBuf	- $$
 SavedIDTR		equ	_SavedIDTR	- $$
 SavedIMREG		equ	_SavedIMREG	- $$
@@ -358,8 +358,18 @@ LABEL_MEM_CHK_OK:
 	mov	byte [LABEL_DESC_STACK + 4], al
 	mov	byte [LABEL_DESC_STACK + 7], ah
 
-        ; 初始化 LDT_A 在 GDT 中的描述符
-        ; code
+	; 初始化 LDT_A 在 GDT 中的描述符
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_CODE_A
+	mov	word [LABEL_LDT_DESC_CODE_A + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_LDT_DESC_CODE_A + 4], al
+	mov	byte [LABEL_LDT_DESC_CODE_A + 7], ah
+
+	; 初始化 LDT_A 中的描述符
+		; code
 	xor	eax, eax
 	mov	ax, ds
 	shl	eax, 4
@@ -378,17 +388,7 @@ LABEL_MEM_CHK_OK:
 	mov	byte [LABEL_LDT_DESC_STACK_A + 4], al
 	mov	byte [LABEL_LDT_DESC_STACK_A + 7], ah
 
-	; 初始化 LDT_A 中的描述符
-	xor	eax, eax
-	mov	ax, ds
-	shl	eax, 4
-	add	eax, LABEL_CODE_A
-	mov	word [LABEL_LDT_DESC_CODE_A + 2], ax
-	shr	eax, 16
-	mov	byte [LABEL_LDT_DESC_CODE_A + 4], al
-	mov	byte [LABEL_LDT_DESC_CODE_A + 7], ah
-
-        ; 初始化 LDT_B 在 GDT 中的描述符
+	; 初始化 LDT_B 在 GDT 中的描述符
 	xor	eax, eax
 	mov	ax, ds
 	shl	eax, 4
@@ -417,9 +417,8 @@ LABEL_MEM_CHK_OK:
 	shr	eax, 16
 	mov	byte [LABEL_LDT_DESC_STACK_B + 4], al
 	mov	byte [LABEL_LDT_DESC_STACK_B + 7], ah
-
 	
-        ; 初始化 LDT_C 在 GDT 中的描述符
+	; 初始化 LDT_C 在 GDT 中的描述符
 	xor	eax, eax
 	mov	ax, ds
 	shl	eax, 4
@@ -449,8 +448,7 @@ LABEL_MEM_CHK_OK:
 	mov	byte [LABEL_LDT_DESC_STACK_C + 4], al
 	mov	byte [LABEL_LDT_DESC_STACK_C + 7], ah
 	
-	
-        ; 初始化 LDT_D 在 GDT 中的描述符
+	; 初始化 LDT_D 在 GDT 中的描述符
 	xor	eax, eax
 	mov	ax, ds
 	shl	eax, 4
@@ -561,7 +559,7 @@ LABEL_MEM_CHK_OK:
 	mov	cr0, eax
 
 	; 真正进入保护模式
-	jmp	dword SelectorCode32:0	; 执行这一句会把 SelectorCode32 装入 cs, 并跳转到 Code32Selector:0  处
+	jmp	dword SelectorCode32:0	; 执行这一句会把 SelectorCode32 装入 cs, 并跳转到 SelectorCode32:0  处
 
 LABEL_REAL_ENTRY:		; 从保护模式跳回到实模式就到了这里
 	mov	ax, cs
@@ -617,7 +615,7 @@ LABEL_SEG_CODE32:
 	mov	es, ax
 
 	push	LenHUST          ; # 长度 Counter
-	push	OffsetHUST       ; # 偏移 Source
+	push	OffsetHUST       ; # 偏移 Source（源）
 	push	TaskHUST         ; # 页起始地址 Destination
 	call	MemCpy
 	add	esp, 12
@@ -663,7 +661,7 @@ LABEL_SEG_CODE32:
         ; # 配置可编程控制中断器
         call	Init8259A
         sti
-	jmp	SelectorLDTCodeB:0      ; # 进入任务2打印'MRSU '
+	jmp	SelectorLDTCodeB:0      ; # 进入任务2打印'MRSU'
 
 	;call	SetRealmode8259A
 
@@ -754,7 +752,7 @@ ClockHandler	equ	_ClockHandler - $$
         cmp     ax, 0
         jz      .hust   
 
-        mov     byte [current], 0               ; # 当current为1时输出'MRSU '
+        mov     byte [current], 0               ; # 当current为1时输出'MRSU'
         mov	al, 20h
 	out	20h, al				; 发送 EOI
         jmp     SelectorTSSB:0
