@@ -1,4 +1,3 @@
-
 SRC:=task1.asm
 BIN:=$(subst .asm,.com,$(SRC))
 
