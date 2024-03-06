@@ -8,6 +8,8 @@ PageTabBase2	equ	211000h	; 页表开始地址:		2M + 64K + 4K
 LinearAddrDemo	equ	00401000h
 TaskHUST		equ	00401000h
 TaskMRSU		equ	00501000h
+TaskVERY		equ	00601000h
+TaskLOVE		equ	00701000h
 
 org	0100h
 	jmp	LABEL_BEGIN
@@ -25,8 +27,12 @@ LABEL_DESC_DATA:	Descriptor      0,              DataLen-1,      DA_DRW			      
 LABEL_DESC_STACK:	Descriptor      0,              TopOfStack,     DA_DRWA | DA_32		        ; Stack, 32 位
 LABEL_DESC_LDT_A:       Descriptor      0,              LDTALen-1,      DA_LDT		                ; LDTA
 LABEL_DESC_LDT_B:       Descriptor      0,              LDTBLen-1,      DA_LDT                          ; LDTB
+LABEL_DESC_LDT_C:       Descriptor      0,              LDTCLen-1,      DA_LDT		                ; LDTA
+LABEL_DESC_LDT_D:       Descriptor      0,              LDTDLen-1,      DA_LDT                          ; LDTB
 LABEL_DESC_TSS_A:       Descriptor      0,              TSSALen-1,      DA_386TSS	                ; TSSA
 LABEL_DESC_TSS_B:       Descriptor      0,              TSSBLen-1,      DA_386TSS                       ; TSSB
+LABEL_DESC_TSS_C:       Descriptor      0,              TSSCLen-1,      DA_386TSS	                ; TSSA
+LABEL_DESC_TSS_D:       Descriptor      0,              TSSDLen-1,      DA_386TSS                       ; TSSB
 LABEL_DESC_VIDEO:	Descriptor      0B8000h,        0ffffh,         DA_DRW			        ; 显存首地址
 ; GDT 结束
 
@@ -44,8 +50,12 @@ SelectorData		equ	LABEL_DESC_DATA		- LABEL_GDT
 SelectorStack		equ	LABEL_DESC_STACK	- LABEL_GDT
 SelectorLDTA		equ	LABEL_DESC_LDT_A	- LABEL_GDT
 SelectorLDTB		equ	LABEL_DESC_LDT_B	- LABEL_GDT
+SelectorLDTC		equ	LABEL_DESC_LDT_C	- LABEL_GDT
+SelectorLDTD		equ	LABEL_DESC_LDT_D	- LABEL_GDT
 SelectorTSSA		equ	LABEL_DESC_TSS_A	- LABEL_GDT
 SelectorTSSB		equ	LABEL_DESC_TSS_B	- LABEL_GDT
+SelectorTSSC		equ	LABEL_DESC_TSS_C	- LABEL_GDT
+SelectorTSSD		equ	LABEL_DESC_TSS_D	- LABEL_GDT
 SelectorVideo		equ	LABEL_DESC_VIDEO	- LABEL_GDT
 ; END of [SECTION .gdt]
 
@@ -200,6 +210,76 @@ LABEL_TSS_B:
 TSSBLen		equ	$ - LABEL_TSS_B
 ; TSS_B --------------------------------------------------------------
 
+; TSS_C --------------------------------------------------------------
+ALIGN	32
+[BITS	32]
+LABEL_TSS_C:
+		DD	0			; Back
+		DD	0		        ; 0 级堆栈
+		DD	0		        ; 
+		DD	0			; 1 级堆栈
+		DD	0			; 
+		DD	0			; 2 级堆栈
+		DD	0			; 
+		DD	PageDirBase2		; CR3
+		DD	0			; EIP
+		DD	0200h			; EFLAGS
+		DD	0			; EAX
+		DD	0			; ECX
+		DD	0			; EDX
+		DD	0			; EBX
+		DD	0			; ESP
+		DD	0			; EBP
+		DD	0			; ESI
+		DD	PageDirBase2		; EDI
+		DD	SelectorFlatRW          ; ES
+		DD	SelectorLDTCodeC	; CS
+		DD	SelectorLDTStackC	; SS
+		DD	SelectorData		; DS
+		DD	0			; FS
+		DD	0			; GS
+		DD	SelectorLDTC		; LDT
+		DW	0			; 调试陷阱标志
+		DW	$ - LABEL_TSS_C + 2	; I/O位图基址
+		DB	0ffh			; I/O位图结束标志
+TSSCLen		equ	$ - LABEL_TSS_C
+; TSS_C --------------------------------------------------------------
+
+; TSS_D --------------------------------------------------------------
+ALIGN	32
+[BITS	32]
+LABEL_TSS_D:
+		DD	0			; Back
+		DD	0		        ; 0 级堆栈
+		DD	0		        ; 
+		DD	0			; 1 级堆栈
+		DD	0			; 
+		DD	0			; 2 级堆栈
+		DD	0			; 
+		DD	PageDirBase2		; CR3
+		DD	0			; EIP
+		DD	0200h			; EFLAGS
+		DD	0			; EAX
+		DD	0			; ECX
+		DD	0			; EDX
+		DD	0			; EBX
+		DD	0			; ESP
+		DD	0			; EBP
+		DD	0			; ESI
+		DD	PageDirBase2		; EDI
+		DD	SelectorFlatRW          ; ES
+		DD	SelectorLDTCodeD	; CS
+		DD	SelectorLDTStackD	; SS
+		DD	SelectorData		; DS
+		DD	0			; FS
+		DD	0			; GS
+		DD	SelectorLDTD		; LDT
+		DW	0			; 调试陷阱标志
+		DW	$ - LABEL_TSS_D + 2	; I/O位图基址
+		DB	0ffh			; I/O位图结束标志
+TSSDLen		equ	$ - LABEL_TSS_D
+; TSS_D --------------------------------------------------------------
+
 
 [SECTION .s16]
 [BITS	16]
@@ -336,6 +416,66 @@ LABEL_MEM_CHK_OK:
 	mov	byte [LABEL_LDT_DESC_STACK_B + 4], al
 	mov	byte [LABEL_LDT_DESC_STACK_B + 7], ah
 
+        ; 初始化 LDT_C 在 GDT 中的描述符
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_LDT_C
+	mov	word [LABEL_DESC_LDT_C + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_DESC_LDT_C + 4], al
+	mov	byte [LABEL_DESC_LDT_C + 7], ah
+
+	; 初始化 LDT_C 中的描述符
+        ; code
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_CODE_C
+	mov	word [LABEL_LDT_DESC_CODE_C + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_LDT_DESC_CODE_C + 4], al
+	mov	byte [LABEL_LDT_DESC_CODE_C + 7], ah
+        ; stack        
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_LDT_STACK_C
+	mov	word [LABEL_LDT_DESC_STACK_C + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_LDT_DESC_STACK_C + 4], al
+	mov	byte [LABEL_LDT_DESC_STACK_C + 7], ah
+
+        ; 初始化 LDT_D 在 GDT 中的描述符
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_LDT_D
+	mov	word [LABEL_DESC_LDT_D + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_DESC_LDT_D + 4], al
+	mov	byte [LABEL_DESC_LDT_D + 7], ah
+
+	; 初始化 LDT_D 中的描述符
+        ; code
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_CODE_D
+	mov	word [LABEL_LDT_DESC_CODE_D + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_LDT_DESC_CODE_D + 4], al
+	mov	byte [LABEL_LDT_DESC_CODE_D + 7], ah
+        ; stack        
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_LDT_STACK_D
+	mov	word [LABEL_LDT_DESC_STACK_D + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_LDT_DESC_STACK_D + 4], al
+	mov	byte [LABEL_LDT_DESC_STACK_D + 7], ah
+
         ; 初始化 TSS_A 描述符
 	xor	eax, eax
 	mov	ax, ds
@@ -355,6 +495,26 @@ LABEL_MEM_CHK_OK:
 	shr	eax, 16
 	mov	byte [LABEL_DESC_TSS_B + 4], al
 	mov	byte [LABEL_DESC_TSS_B + 7], ah
+
+        ; 初始化 TSS_C 描述符
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_TSS_C
+	mov	word [LABEL_DESC_TSS_C + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_DESC_TSS_C + 4], al
+	mov	byte [LABEL_DESC_TSS_C + 7], ah
+
+        ; 初始化 TSS_C 描述符
+	xor	eax, eax
+	mov	ax, ds
+	shl	eax, 4
+	add	eax, LABEL_TSS_C
+	mov	word [LABEL_DESC_TSS_C + 2], ax
+	shr	eax, 16
+	mov	byte [LABEL_DESC_TSS_C + 4], al
+	mov	byte [LABEL_DESC_TSS_C + 7], ah
 
 	; 为加载 GDTR 作准备
 	xor	eax, eax
@@ -461,6 +621,18 @@ LABEL_SEG_CODE32:
 	push	LenMRSU
 	push	OffsetMRSU
 	push	TaskMRSU
+	call	MemCpy
+	add	esp, 12
+
+	push	LenVERY
+	push	OffsetVERY
+	push	TaskVERY
+	call	MemCpy
+	add	esp, 12
+
+	push	LenLOVE
+	push	OffsetLOVE
+	push	TaskLOVE
 	call	MemCpy
 	add	esp, 12
         
@@ -728,6 +900,43 @@ LenMRSU	equ	$ - MRSU
 ; ---------------------------------------------------------------------------
 
 
+; VERY -----------------------------------------------------------------------
+VERY:
+OffsetVERY	equ	VERY - $$
+	mov	ax, SelectorVideo
+	mov	gs, ax			; 视频段选择子(目的)
+    mov	ah, 0Ch				; 0000: 黑底    1100: 红字
+	mov	al, 'V'
+	mov	[gs:((80 * 3 + 0) * 2)], ax	; 屏幕第 3 行, 第 0 列。
+	mov	al, 'E'
+	mov	[gs:((80 * 3 + 1) * 2)], ax	; 屏幕第 3 行, 第 1 列。
+	mov	al, 'R'
+	mov	[gs:((80 * 3 + 2) * 2)], ax	; 屏幕第 3 行, 第 2 列。
+    mov	al, 'Y'
+	mov	[gs:((80 * 3 + 3) * 2)], ax	; 屏幕第 3 行, 第 3 列。 
+    retf
+LenVERY	equ	$ - VERY
+; ---------------------------------------------------------------------------
+
+; LOVE -----------------------------------------------------------------------
+LOVE:
+OffsetLOVE	equ	LOVE - $$
+	mov	ax, SelectorVideo
+	mov	gs, ax			; 视频段选择子(目的)
+    mov	ah, 0Fh				; 0000: 黑底    1111: 白字
+	mov	al, 'L'
+	mov	[gs:((80 * 3 + 0) * 2)], ax	; 屏幕第 3 行, 第 0 列。
+	mov	al, 'O'
+	mov	[gs:((80 * 3 + 1) * 2)], ax	; 屏幕第 3 行, 第 1 列。
+	mov	al, 'V'
+	mov	[gs:((80 * 3 + 2) * 2)], ax	; 屏幕第 3 行, 第 2 列。
+    mov	al, 'E'
+	mov	[gs:((80 * 3 + 3) * 2)], ax	; 屏幕第 3 行, 第 3 列。 
+    retf
+LenLOVE	equ	$ - LOVE
+; ---------------------------------------------------------------------------
+
+
 ; 显示内存信息 --------------------------------------------------------------
 DispMemSize:
 	push	esi
@@ -873,3 +1082,73 @@ LABEL_CODE_B:
         jmp     .loop
 CodeBLen	equ	$ - LABEL_CODE_B
 ; END of [SECTION .lcode_b]
+
+; LDT_C
+[SECTION .ldt_c]
+ALIGN	32
+LABEL_LDT_C:
+;                                   段基址,         段界限,      属性
+LABEL_LDT_DESC_CODE_C:	Descriptor      0,      CodeCLen-1,     DA_C + DA_32	; Code, 32 位
+LABEL_LDT_DESC_STACK_C: Descriptor      0,      TopOfStackC,    DA_DRWA | DA_32 ; Stack 
+; LDT_C 结束 
+LDTCLen		equ	$ - LABEL_LDT_C
+
+; LDT_C 选择子
+SelectorLDTCodeC	equ	LABEL_LDT_DESC_CODE_C - LABEL_LDT_C + SA_TIL
+SelectorLDTStackC       equ     LABEL_LDT_DESC_STACK_C - LABEL_LDT_C + SA_TIL
+; END of [SECTION .ldt_c]
+
+; StackA 堆栈段
+[SECTION .lstack_c]
+ALIGN	32
+[BITS	32]
+LABEL_LDT_STACK_C:
+	times 512 db 0
+TopOfStackC	equ	$ - LABEL_LDT_STACK_C - 1
+; END of [SECTION .lstack_c]
+
+; CodeC (LDT, 32 位代码段)
+[SECTION .lcode_c]
+ALIGN	32
+[BITS	32]
+LABEL_CODE_C:
+.loop:
+        call	SelectorFlatC:LinearAddrDemo
+        jmp     .loop
+CodeCLen	equ	$ - LABEL_CODE_C
+; END of [SECTION .lcode_c]
+
+; LDT_D
+[SECTION .ldt_d]
+ALIGN	32
+LABEL_LDT_D:
+;                                   段基址,         段界限,      属性
+LABEL_LDT_DESC_CODE_D:	Descriptor      0,      CodeDLen-1,     DA_C + DA_32	; Code, 32 位
+LABEL_LDT_DESC_STACK_D: Descriptor      0,      TopOfStackD,    DA_DRWA | DA_32 ; Stack 
+; LDT_D 结束 
+LDTDLen		equ	$ - LABEL_LDT_D
+
+; LDT_D 选择子
+SelectorLDTCodeD	equ	LABEL_LDT_DESC_CODE_D - LABEL_LDT_D + SA_TIL
+SelectorLDTStackD       equ     LABEL_LDT_DESC_STACK_D - LABEL_LDT_D + SA_TIL
+; END of [SECTION .ldt_d]
+
+; StackA 堆栈段
+[SECTION .lstack_d]
+ALIGN	32
+[BITS	32]
+LABEL_LDT_STACK_D:
+	times 512 db 0
+TopOfStackD	equ	$ - LABEL_LDT_STACK_D - 1
+; END of [SECTION .lstack_d]
+
+; CodeD (LDT, 32 位代码段)
+[SECTION .lcode_d]
+ALIGN	32
+[BITS	32]
+LABEL_CODE_D:
+.loop:
+        call	SelectorFlatC:LinearAddrDemo
+        jmp     .loop
+CodeDLen	equ	$ - LABEL_CODE_D
+; END of [SECTION .lcode_d]
