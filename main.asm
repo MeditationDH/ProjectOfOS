@@ -1,4 +1,4 @@
-%include	"pmtest.inc"
+%include	"pm.inc"
 %include    "macro.inc"
 
 PageDirBase0	equ	200000h	; 页目录 0 开始地址:	2M
@@ -184,7 +184,7 @@ LABEL_MEM_CHK_FAIL:
 LABEL_MEM_CHK_OK:
 
 	; 使用宏 InitDescriptorBase 初始化描述符的基址
-	; 当前 DS = ES = SS = CS, 宏 InitDescriptorBase 见 "pmtest.inc"
+	; 当前 DS = ES = SS = CS, 宏 InitDescriptorBase 见 "pm.inc"
 	InitDescriptorBase LABEL_SEG_CODE16,	LABEL_DESC_CODE16			; 初始化 16 位代码段描述符
 	InitDescriptorBase LABEL_SEG_CODE32,	LABEL_DESC_CODE32			; 初始化 32 位代码段描述符
 	InitDescriptorBase LABEL_DATA,			LABEL_DESC_DATA				; 初始化数据段描述符
