@@ -86,14 +86,14 @@ ALIGN	32
 LABEL_DATA:
 ; 实模式下使用这些符号
 ; 字符串
-_szPMMessage:		db	"In Protect Mode now. ^-^",0Ah, 0Ah, 0 ; 进入保护模式后显示此字符串
+_szPMMessage:		db	"It is in Protect Mode now.",0Ah, 0Ah, 0 ; 进入保护模式后显示此字符串
 _szMemChkTitle:		db	"BaseAddrL BaseAddrH LengthLow LengthHigh   Type", 0Ah, 0
 _szRAMSize			db	"RAM size:", 0
 _szReturn			db	0Ah, 0
 ; 变量
 _wSPValueInRealMode	dw	0
 _dwMCRNumber:		dd	0					; Memory Check Result Number
-_dwDispPos:			dd	(80 * 2 + 0) * 2	; 屏幕第 2 行, 第 0 列。
+_dwDispPos:			dd	(80 * 6 + 0) * 2	; 屏幕第 2 行, 第 0 列。
 _dwMemSize:			dd	0
 _ARDStruct:									; Address Range Descriptor Structure
 	_dwBaseAddrLow:		dd	0

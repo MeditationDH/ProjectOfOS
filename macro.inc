@@ -145,7 +145,7 @@ LABEL_T%1_CODE:
 	mov 	ah, %2
 .outputLoop:
 	mov 	al, [szTask%1Message + ecx]
-	mov 	[gs:((80 * 20 + ecx) * 2)], ax
+	mov 	[gs:((80 * 3 + ecx) * 2)], ax
 	inc 	ecx
 	; 判断是否到达字符串末尾
 	cmp 	al, 0
