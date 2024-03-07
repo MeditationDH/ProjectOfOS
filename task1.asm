@@ -18,15 +18,10 @@ org	0100h
 ALIGN	32
 [BITS	32]
 LABEL_IDT:
-; 门                          目标选择子,            偏移, DCount, 属性
-%rep 32
-				Gate	SelectorCode32, SpuriousHandler,      0, DA_386IGate
-%endrep
-.020h:			Gate	SelectorCode32,    ClockHandler,      0, DA_386IGate
-%rep 95
-				Gate	SelectorCode32, SpuriousHandler,      0, DA_386IGate
-%endrep
-.080h:			Gate	SelectorCode32,  UserIntHandler,      0, DA_386IGate
+; 门          目标选择子,          偏移,    	 DCount, 属性
+%rep 255
+	Gate	SelectorCode32,    ClockHandler,      0, DA_386IGate
+%endrep				
 
 IdtLen		equ	$ - LABEL_IDT	; IDT 长度
 IdtPtr		dw	IdtLen - 1		; IDT 段界限
@@ -568,21 +563,9 @@ ClockHandler	equ	_ClockHandler - $$
 	pop		ds
 	iretd
 
-_UserIntHandler:
-UserIntHandler	equ	_UserIntHandler - $$
-	mov		ah, 0Ch							; 0000: 黑底    1100: 红字
-	mov		al, 'i'
-	mov		[gs:((80 * 0 + 70) * 2)], ax	; 屏幕第 0 行, 第 70 列。
-	iretd
-
-_SpuriousHandler:
-SpuriousHandler	equ	_SpuriousHandler - $$
-	mov		ah, 0Ch							; 0000: 黑底    1100: 红字
-	mov		al, '!'
-	mov		[gs:((80 * 0 + 75) * 2)], ax	; 屏幕第 0 行, 第 75 列。
-	iretd
 ; END of int handler -----------------------------------------------------------
 
+; 初始化页表
 DefineSetupPaging 0
 DefineSetupPaging 1
 DefineSetupPaging 2
