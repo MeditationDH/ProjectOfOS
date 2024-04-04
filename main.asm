@@ -524,7 +524,7 @@ ClockHandler	equ	_ClockHandler - $$
 	jne     .current_not_zero
 	xor     eax, eax
 	xor     ecx, ecx
-.priority_loop:
+.priority_loop:		 ; 获得四个任务中优先级最大的任务号
     cmp     eax, dword [TaskTicks + ecx * 4]
 	jge     .priority_loop_end
 	mov     eax, dword [TaskTicks + ecx * 4]
@@ -537,9 +537,9 @@ ClockHandler	equ	_ClockHandler - $$
 .current_not_zero:
 	mov 	ebx, dword [dwCurrentTask]
 	; TaskTicks[MaxPriorityTask]--
-	dec		dword [TaskTicks + ebx * 4]
+	dec		dword [TaskTicks + ebx * 4]	; 任务时间片减一
 	; 如果编号没有变化，直接返回
-	cmp		ebx, edx
+	cmp		ebx, edx	; edx 存储的是进入这一段代码之前的进程号
 	je		.exit
 	cmp		ebx, 0
 	je		.1
@@ -565,7 +565,7 @@ ClockHandler	equ	_ClockHandler - $$
 
 ; END of int handler -----------------------------------------------------------
 
-; 初始化页表
+; 将初始化页表的函数宏展开到这里，方便上面使用
 DefineSetupPaging 0
 DefineSetupPaging 1
 DefineSetupPaging 2

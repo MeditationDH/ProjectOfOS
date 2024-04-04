@@ -18,7 +18,7 @@
 ; usage: DefineLDT 任务号
 ; ------------------------------------------------------------------------
 %macro DefineLDT 1
-; 任务 0 的 LDT
+; 任务的 LDT
 [SECTION .ldt%1]
 ALIGN	32
 LABEL_LDT%1:
@@ -44,7 +44,7 @@ SelectorTask%1Stack3		equ	LABEL_DESC_TASK%1_STACK3	- LABEL_LDT%1 + SA_TIL + SA_R
 ; usage: DefineTSS 任务号
 ; ------------------------------------------------------------------------
 %macro DefineTSS 1
-; 任务 0 的 TSS
+; 任务的 TSS
 [SECTION .tss%1]
 ALIGN	32
 [BITS	32]
@@ -87,7 +87,7 @@ TSSLen%1		equ	$ - LABEL_TSS%1	; TSS0 的大小
 ; usage: DefineDATA 任务号, 任务输出内容
 ; ------------------------------------------------------------------------
 %macro DefineDATA 2
-; 任务 0 的数据段
+; 任务的数据段
 [SECTION .t%1data]
 ALIGN	32
 [BITS	32]
@@ -103,7 +103,7 @@ Task%1DataLen	equ	$ - LABEL_T%1_DATA
 ; usage: DefineStack0 任务号
 ; ------------------------------------------------------------------------
 %macro DefineStack0 1
-; 任务 0 的核心堆栈
+; 任务的核心堆栈
 [SECTION .t%1s0]
 ALIGN	32
 [BITS	32]
@@ -119,7 +119,7 @@ TopOfTask%1Stack0	equ	$ - LABEL_T%1_STACK0 - 1
 ; usage: DefineStack3 任务号
 ; ------------------------------------------------------------------------
 %macro DefineStack3 1
-; 任务 0 的用户堆栈
+; 任务的用户堆栈
 [SECTION .t%1s3]
 ALIGN	32
 [BITS	32]
@@ -135,7 +135,7 @@ TopOfTask%1Stack3	equ	$ - LABEL_T%1_STACK3 - 1
 ; usage: DefineCode 任务号, 输出颜色
 ; ------------------------------------------------------------------------
 %macro DefineCode 2
-; 任务 0 的代码段
+; 任务的代码段
 [SECTION .t%1c32]
 ALIGN	32
 [BITS	32]
@@ -222,7 +222,7 @@ SetupPaging%1:
 	mov		eax, SelectorTask%1Data
 	mov		ds, eax
 
-	; 使用 iretd 进行任务切换, 切换至任务 0
+	; 使用 iretd 进行任务切换
 	push	SelectorTask%1Stack3	; SS
 	push	TopOfTask%1Stack3	; ESP
 	pushfd						; EFLAGS
