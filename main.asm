@@ -11,6 +11,7 @@ PageDirBase3    equ 230000h ; 页目录 3 开始地址:	2M + 192K
 PageTblBase3    equ 231000h ; 页表 3 开始地址:		2M + 192K + 4K
 
 org	0100h
+	; xchg bx,bx
 	jmp	LABEL_BEGIN
 
 ; IDT
@@ -19,9 +20,14 @@ ALIGN	32
 [BITS	32]
 LABEL_IDT:
 ; 门          目标选择子,          偏移,    	 DCount, 属性
-%rep 255
-	Gate	SelectorCode32,    ClockHandler,      0, DA_386IGate
-%endrep				
+%rep 32
+			Gate	SelectorCode32, UserIntHandler,      0, DA_386IGate
+%endrep
+.020h:			Gate	SelectorCode32,   ClockHandler,      0, DA_386IGate  ;这个是时钟中断
+%rep 95
+			Gate	SelectorCode32, UserIntHandler,      0, DA_386IGate
+%endrep
+.080h:			Gate	SelectorCode32,  UserIntHandler,      0, DA_386IGate
 
 IdtLen		equ	$ - LABEL_IDT	; IDT 长度
 IdtPtr		dw	IdtLen - 1		; IDT 段界限
@@ -156,6 +162,7 @@ DefineAllStuff 3, "MRSU", 0Fh
 [BITS	16]
 ; 程序入口
 LABEL_BEGIN:
+	; xchg bx,bx
 	mov		ax, cs
 	mov		ds, ax
 	mov		es, ax
@@ -291,6 +298,7 @@ LABEL_SEG_CODE32:
 	mov		ax, SelectorStack
 	mov		ss, ax				; SS <-堆栈段选择子
 	mov		esp, TopOfStack		; ESP <- 栈顶指针
+	; xchg bx,bx
 
 	call	Init8253A			; 设置定时芯片
 	call	Init8259A			; 初始化中断
@@ -323,7 +331,7 @@ LABEL_SEG_CODE32:
 	call	SetupPaging2		; 初始化任务 2 的页表
 	call	SetupPaging3		; 初始化任务 3 的页表
 
-	sti							; 打开中断
+	sti							; 打开中断，从这里跳到中断处理程序 ClockHandler
 
 	mov		ax, SelectorTSS0	; ┳ 加载 TSS
 	ltr		ax					; ┛
@@ -352,15 +360,16 @@ LABEL_SEG_CODE32:
 	mov		eax, SelectorTask0Data
 	mov		ds, eax
 
+	; xchg bx,bx
 	; 使用 iretd 进行任务切换, 切换至任务 0
-	push	SelectorTask0Stack3	; SS
-	push	TopOfTask0Stack3	; ESP
-	pushfd						; EFLAGS
+	push	SelectorTask0Stack3	; SS，栈选择子
+	push	TopOfTask0Stack3	; ESP，栈顶地址
+	pushfd						; EFLAGS，标志寄存器入栈，下面出栈并开启中断后会重新入栈
 	pop		eax					; ┓
 	or		eax, 0x200			; ┣ 将 EFLAGS 中的 IF 位置 1, 即开启中断
 	push	eax					; ┛
-	push	SelectorTask0Code	; CS
-	push	0					; EIP
+	push	SelectorTask0Code	; CS，代码段选择子
+	push	0					; EIP，任务0入口地址设为0
 	iretd
 
 	call	SetRealmode8259A	; 恢复 8259A 以顺利返回实模式, 未执行
@@ -483,8 +492,16 @@ io_delay:
 ; END of io_delay --------------------------------------------------------------
 
 ; int handler ------------------------------------------------------------------
+_UserIntHandler:
+UserIntHandler	equ	_UserIntHandler - $$
+	mov	ah, 0Ch				; 0000: 黑底    1100: 红字
+	mov	al, 'I'
+	mov	[gs:((80 * 0 + 70) * 2)], ax	; 屏幕第 0 行, 第 70 列。
+	iretd
+
 _ClockHandler:
 ClockHandler	equ	_ClockHandler - $$
+	; xchg bx,bx
 	push	ds
 	pushad
 
@@ -499,6 +516,7 @@ ClockHandler	equ	_ClockHandler - $$
 
 	; 判断TaskTicks是否全为0, 如果是, 则重置
 	xor 	ecx, ecx
+	; xchg bx,bx
 .all_zero_test_loop:
 	; 注意TaskTicks为dd, 4字节
 	cmp		dword [TaskTicks + ecx * 4], 0
@@ -551,12 +569,16 @@ ClockHandler	equ	_ClockHandler - $$
 	je		.4
 	jmp		.exit
 .1:
+	; xchg bx,bx
 	SwitchTask	0
 .2:
+	; xchg bx,bx
 	SwitchTask	1
 .3:
+	; xchg bx,bx
 	SwitchTask	2
 .4:
+	; xchg bx,bx
 	SwitchTask	3
 .exit:
 	popad

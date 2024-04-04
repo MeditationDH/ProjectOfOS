@@ -1,0 +1,14 @@
+描述开发环境和运行环境的配置，如何更新程序，如何运行/调试程序，如何观察程序的运行效果？
+
+该任务的开发环境为 Ubuntu 22.04.4 LTS，内核版本为 5.15.146.1-microsoft-standard-WSL2。使用到的工具有：Bochs、NASM、FreeDOS、VSCode、git等。
+该任务的运行环境配置过程如下：
+	使用 apt 工具安装 NASM、Bochs、bochs-x、vgabios和bximages。
+	在 Bochs 官网下载 FreeDOS 软盘映像文件，解压后将其中的 a.img 复制到工作目录下，并重命名为 freedos.img。
+	使用 bximage 在工作目录下生成一个软盘映像文件 pm.img。
+	配置 Bochs 的运行控制文件 bochsrc。内容如下。
+	启动 Bochs ，在 FreeDOS 启动完成后使用 format.exe b: 命令格式化 b 盘。
+运行和调试程序：
+	将于渊参考书中的 ch3/pmtest8.asm 文件拷贝到工程中，并重命名为 main.asm，用于后续编写的蓝本。
+	在 Makefile 文件中，先创建目录 /mnt/floppy 文件夹，再将 pm.img 挂载到 /mnt/floppy 目录下，然后编译 main.asm 并将二进制文件拷贝进挂载点，最后解挂该挂载点。文件内容如下。
+	运行命令 bochs -f bochsrc ，并进入 FreeDOS ，进入 b 盘后，运行 main.com ，能够成功运行。
+

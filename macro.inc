@@ -212,6 +212,7 @@ SetupPaging%1:
 ; ------------------------------------------------------------------------
 
 %macro SwitchTask 1
+	; xchg bx,bx
 	mov		ax, SelectorLDT%1	; ┳ 加载 LDT
 	lldt	ax					; ┛
 
