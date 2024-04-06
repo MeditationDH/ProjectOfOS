@@ -5,5 +5,4 @@ floppya: 1_44=freedos.img, status=inserted
 floppyb: 1_44=pm.img, status=inserted
 boot: a
 mouse: enabled=0
-magic_break: enabled=1
 

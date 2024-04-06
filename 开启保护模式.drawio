@@ -1,105 +1,105 @@
 <mxfile host="65bd71144e" scale="5" border="0">
     <diagram id="2LRzTv0UbwkCMVYju6ZP" name="第 1 页">
-        <mxGraphModel dx="996" dy="433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="576" dy="433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="80" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=宋体;" parent="1" source="68" target="59" edge="1">
+                <mxCell id="80" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Helvetica;" parent="1" source="68" target="59" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="68" value="保护模式下的动作" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;flipV=1;flipH=1;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="68" value="保护模式下的动作" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;flipV=1;flipH=1;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="362" y="1049" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="69" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="23" target="68" edge="1">
+                <mxCell id="69" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="23" target="68" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="72" value="实模式" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="72" value="实模式" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="392" y="920" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="73" value="保护模式" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="73" value="保护模式" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="387" y="960" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="46" value="&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;程序出口&lt;/span&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="46" value="&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;程序出口&lt;/span&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="586" y="500" width="80" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="63" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=宋体;" parent="1" source="49" target="46" edge="1">
+                <mxCell id="63" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Helvetica;" parent="1" source="49" target="46" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="664" y="329" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="10" value="&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;使用15号中断得到内存信息&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;" style="rounded=0;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="10" value="&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;使用15号中断得到内存信息&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;" style="rounded=0;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="108" y="616" width="190" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="10" target="8" edge="1">
+                <mxCell id="12" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="10" target="8" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="" style="edgeStyle=none;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" source="5" target="10" edge="1">
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" source="5" target="10" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="2" value="&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;程序入口&lt;/span&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="2" value="&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;程序入口&lt;/span&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="163" y="500" width="80" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;设置跳回实模式的基址&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;保存实模式下的SP寄存器&lt;/span&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="5" value="&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;设置跳回实模式的基址&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;保存实模式下的SP寄存器&lt;/span&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="113" y="553" width="180" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="2" target="5" edge="1">
+                <mxCell id="27" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="2" target="5" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;初始化描述符、&lt;/span&gt;GDT和IDT的基址&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="8" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;初始化描述符、&lt;/span&gt;GDT和IDT的基址&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="93" y="689" width="220" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;保存IDTR和&lt;/span&gt;中断屏蔽寄存器的值&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="13" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;保存IDTR和&lt;/span&gt;中断屏蔽寄存器的值&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="93" y="751" width="220" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="8" target="13" edge="1">
+                <mxCell id="14" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="8" target="13" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;关中断、&lt;span style=&quot;background-color: initial;&quot;&gt;加载GDTR和IDTR&lt;/span&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="19" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;关中断、&lt;span style=&quot;background-color: initial;&quot;&gt;加载GDTR和IDTR&lt;/span&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="113" y="814" width="180" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="13" target="19" edge="1">
+                <mxCell id="20" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="13" target="19" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;打开 A20 地址线&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="21" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;打开 A20 地址线&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="138" y="877" width="130" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="19" target="21" edge="1">
+                <mxCell id="22" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="19" target="21" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;将CR0寄存器的最低位设为1&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;并跳转进入保护模式&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="23" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;将CR0寄存器的最低位设为1&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;并跳转进入保护模式&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="108" y="930" width="190" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="21" target="23" edge="1">
+                <mxCell id="24" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="21" target="23" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="49" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;开中断&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="49" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;开中断&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="591" y="588" width="70" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="66" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="53" target="49" edge="1">
+                <mxCell id="66" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="53" target="49" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="53" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;关闭 A20 地址线&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="53" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;关闭 A20 地址线&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="561" y="676" width="130" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="65" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="55" target="53" edge="1">
+                <mxCell id="65" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="55" target="53" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;恢复IDTR和中断屏蔽寄存器的值&lt;br&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="55" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;恢复IDTR和中断屏蔽寄存器的值&lt;br&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="516" y="764" width="220" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="64" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="57" target="55" edge="1">
+                <mxCell id="64" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="57" target="55" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="57" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;恢复 sp 寄存器&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="57" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;恢复 sp 寄存器&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="566" y="852" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="61" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=宋体;" parent="1" source="59" target="57" edge="1">
+                <mxCell id="61" value="" style="edgeStyle=none;html=1;labelBackgroundColor=none;fontColor=default;fontFamily=Helvetica;" parent="1" source="59" target="57" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="59" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;将CR0寄存器的最低位设为0&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;并跳转进入保护模式&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=宋体;" parent="1" vertex="1">
+                <mxCell id="59" value="&lt;div style=&quot;font-size: 14px; line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;将CR0寄存器的最低位设为0&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;&quot;&gt;并跳转进入保护模式&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="html=1;rounded=0;fontColor=default;labelBackgroundColor=none;fontFamily=Helvetica;" parent="1" vertex="1">
                     <mxGeometry x="531" y="930" width="190" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="78" value="" style="endArrow=none;dashed=1;html=1;fontFamily=宋体;" parent="1" edge="1">
+                <mxCell id="78" value="" style="endArrow=none;dashed=1;html=1;fontFamily=Helvetica;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="60" y="954.5" as="sourcePoint"/>
                         <mxPoint x="800" y="954.5" as="targetPoint"/>

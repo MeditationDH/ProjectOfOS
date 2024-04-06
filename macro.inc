@@ -35,7 +35,7 @@ SelectorTask%1Data		equ LABEL_DESC_TASK%1_DATA	- LABEL_LDT%1 + SA_TIL + SA_RPL3	
 SelectorTask%1Code		equ LABEL_DESC_TASK%1_CODE	- LABEL_LDT%1 + SA_TIL + SA_RPL3				; 代码段选择子
 SelectorTask%1Stack0		equ	LABEL_DESC_TASK%1_STACK0	- LABEL_LDT%1 + SA_TIL				; ring0 堆栈段选择子
 SelectorTask%1Stack3		equ	LABEL_DESC_TASK%1_STACK3	- LABEL_LDT%1 + SA_TIL + SA_RPL3 	; ring3 堆栈段选择子
-; END of [SECTION .ldt0]
+; END of [SECTION .ldt%1]
 %endmacro
 
 
@@ -78,7 +78,7 @@ LABEL_TSS%1:
 		DW	$ - LABEL_TSS%1 + 2	; I/O位图基址
 		DB	0ffh				; I/O位图结束标志
 TSSLen%1		equ	$ - LABEL_TSS%1	; TSS0 的大小
-; END of [SECTION .tss0]
+; END of [SECTION .tss%1]
 %endmacro
 
 
@@ -95,7 +95,7 @@ LABEL_T%1_DATA:
 _szTask%1Message:	db	%2, 0
 szTask%1Message	equ _szTask%1Message - $$
 Task%1DataLen	equ	$ - LABEL_T%1_DATA
-; END of [SECTION .t0data]
+; END of [SECTION .t%1data]
 %endmacro
 
 ; ------------------------------------------------------------------------
@@ -110,7 +110,7 @@ ALIGN	32
 LABEL_T%1_STACK0:
 	times 512 db 0
 TopOfTask%1Stack0	equ	$ - LABEL_T%1_STACK0 - 1
-; END of [SECTION .t0s0]
+; END of [SECTION .t%1s0]
 %endmacro
 
 
@@ -126,7 +126,7 @@ ALIGN	32
 LABEL_T%1_STACK3:
 	times 512 db 0
 TopOfTask%1Stack3	equ	$ - LABEL_T%1_STACK3 - 1
-; END of [SECTION .t0s3]
+; END of [SECTION .t%1s3]
 %endmacro
 
 
@@ -153,7 +153,7 @@ LABEL_T%1_CODE:
 	jmp		LABEL_T%1_CODE
 
 Task%1CodeLen	equ	$ - LABEL_T%1_CODE
-; END of [SECTION .t0c32]
+; END of [SECTION .t%1c32]
 %endmacro
 
 
@@ -175,7 +175,7 @@ Task%1CodeLen	equ	$ - LABEL_T%1_CODE
 ; usage: DefineSetupPaging 任务号
 ; ------------------------------------------------------------------------
 %macro DefineSetupPaging 1
-; SetupPaging1 -----------------------------------------------------------------
+; SetupPaging%1 -----------------------------------------------------------------
 SetupPaging%1:
 	; 初始化页目录
 	mov		ax, SelectorFlatRW
@@ -203,7 +203,7 @@ SetupPaging%1:
 	loop	.2
 
 	ret
-; End of SetupPaging1 ----------------------------------------------------------
+; End of SetupPaging%1 ----------------------------------------------------------
 %endmacro
 
 ; ------------------------------------------------------------------------

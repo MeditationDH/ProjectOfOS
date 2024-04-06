@@ -329,7 +329,6 @@ LABEL_SEG_CODE32:
 	call	SetupPaging3		; 初始化任务 3 的页表
 
 	sti							; 打开中断
-	xchg	bx, bx
 
 	mov		ax, SelectorTSS0	; ┳ 加载 TSS
 	ltr		ax					; ┛
