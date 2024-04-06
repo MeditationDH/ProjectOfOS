@@ -16,10 +16,3 @@
     * 复制代码（4个字符串显示的代码）到指定线性地址
     * 打开分页，加载LDT，配置TR
     * 配置8259A，进入任务2打印MRSU
-    * 
-* 中断门描述符定义
-    * 重复定义了255个，SelectorCode32为中断处理程序所在的代码段，ClockHandler为中断处理程序的入口点。
-```
-%rep 255
-    Gate	SelectorCode32, ClockHandler,   0, DA_386IGate
-```

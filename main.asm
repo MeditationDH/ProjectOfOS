@@ -11,7 +11,6 @@ PageDirBase3    equ 230000h ; 页目录 3 开始地址:	2M + 192K
 PageTblBase3    equ 231000h ; 页表 3 开始地址:		2M + 192K + 4K
 
 org	0100h
-	; xchg bx,bx
 	jmp	LABEL_BEGIN
 
 ; IDT
@@ -162,7 +161,6 @@ DefineAllStuff 3, "MRSU", 0Fh
 [BITS	16]
 ; 程序入口
 LABEL_BEGIN:
-	; xchg bx,bx
 	mov		ax, cs
 	mov		ds, ax
 	mov		es, ax
@@ -298,7 +296,6 @@ LABEL_SEG_CODE32:
 	mov		ax, SelectorStack
 	mov		ss, ax				; SS <-堆栈段选择子
 	mov		esp, TopOfStack		; ESP <- 栈顶指针
-	; xchg bx,bx
 
 	call	Init8253A			; 设置定时芯片
 	call	Init8259A			; 初始化中断
@@ -331,7 +328,8 @@ LABEL_SEG_CODE32:
 	call	SetupPaging2		; 初始化任务 2 的页表
 	call	SetupPaging3		; 初始化任务 3 的页表
 
-	sti							; 打开中断，从这里跳到中断处理程序 ClockHandler
+	sti							; 打开中断
+	xchg	bx, bx
 
 	mov		ax, SelectorTSS0	; ┳ 加载 TSS
 	ltr		ax					; ┛
@@ -349,18 +347,10 @@ LABEL_SEG_CODE32:
 .1:
 	nop
 
-	; 使用 retf 进行任务切换, 切换至任务 0
-	; push	SelectorTask0Stack0	; SS
-	; push	TopOfTask0Stack0	; ESP
-	; push	SelectorTask0Code	; CS
-	; push	0					; EIP
-	; retf
-
 	; 修改ds为任务0的数据段
 	mov		eax, SelectorTask0Data
 	mov		ds, eax
 
-	; xchg bx,bx
 	; 使用 iretd 进行任务切换, 切换至任务 0
 	push	SelectorTask0Stack3	; SS，栈选择子
 	push	TopOfTask0Stack3	; ESP，栈顶地址
@@ -370,7 +360,7 @@ LABEL_SEG_CODE32:
 	push	eax					; ┛
 	push	SelectorTask0Code	; CS，代码段选择子
 	push	0					; EIP，任务0入口地址设为0
-	iretd
+	iretd						; 进入中断处理
 
 	call	SetRealmode8259A	; 恢复 8259A 以顺利返回实模式, 未执行
 	jmp		SelectorCode16:0	; 返回实模式, 未执行
@@ -501,7 +491,6 @@ UserIntHandler	equ	_UserIntHandler - $$
 
 _ClockHandler:
 ClockHandler	equ	_ClockHandler - $$
-	; xchg bx,bx
 	push	ds
 	pushad
 
@@ -514,9 +503,8 @@ ClockHandler	equ	_ClockHandler - $$
 	; 保护当前执行的进程编号
 	mov     edx, dword [dwCurrentTask]
 
-	; 判断TaskTicks是否全为0, 如果是, 则重置
+	; 判断TaskTicks是否全为0, 如果是, 则重置为优先级
 	xor 	ecx, ecx
-	; xchg bx,bx
 .all_zero_test_loop:
 	; 注意TaskTicks为dd, 4字节
 	cmp		dword [TaskTicks + ecx * 4], 0
@@ -569,16 +557,12 @@ ClockHandler	equ	_ClockHandler - $$
 	je		.4
 	jmp		.exit
 .1:
-	; xchg bx,bx
 	SwitchTask	0
 .2:
-	; xchg bx,bx
 	SwitchTask	1
 .3:
-	; xchg bx,bx
 	SwitchTask	2
 .4:
-	; xchg bx,bx
 	SwitchTask	3
 .exit:
 	popad
@@ -587,7 +571,7 @@ ClockHandler	equ	_ClockHandler - $$
 
 ; END of int handler -----------------------------------------------------------
 
-; 将初始化页表的函数宏展开到这里，方便上面使用
+; 将初始化页表的函数宏展开到这里，方便上面使用 SetupPaging 函数
 DefineSetupPaging 0
 DefineSetupPaging 1
 DefineSetupPaging 2

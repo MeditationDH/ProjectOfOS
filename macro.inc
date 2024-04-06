@@ -182,7 +182,7 @@ SetupPaging%1:
 	mov		es, ax
 	mov		edi, PageDirBase%1		; 此段首地址为 PageDirBase1
 	xor		eax, eax
-	mov		eax, PageTblBase%1 | PG_P  | PG_USU | PG_RWW
+	mov		eax, PageTblBase%1 | PG_P  | PG_USU | PG_RWW	; 将页表基址与页表标志（低3位）进行逻辑或运算
 	mov		ecx, [PageTableNumber]
 .1:
 	stosd
@@ -212,7 +212,6 @@ SetupPaging%1:
 ; ------------------------------------------------------------------------
 
 %macro SwitchTask 1
-	; xchg bx,bx
 	mov		ax, SelectorLDT%1	; ┳ 加载 LDT
 	lldt	ax					; ┛
 
@@ -234,10 +233,3 @@ SetupPaging%1:
 	push	0					; EIP
 	iretd
 %endmacro
-
-
-; ------------------------------------------------------------------------
-; 定义bochs magic breakpoint
-; usage: debugger
-; ------------------------------------------------------------------------
-%define debugger xchg bx, bx

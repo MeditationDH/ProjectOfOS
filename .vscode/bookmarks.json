@@ -1,0 +1,224 @@
+{
+	"files": [
+		{
+			"path": "main.asm",
+			"bookmarks": [
+				{
+					"line": 16,
+					"column": 4,
+					"label": ""
+				},
+				{
+					"line": 36,
+					"column": 4,
+					"label": ""
+				},
+				{
+					"line": 82,
+					"column": 4,
+					"label": ""
+				},
+				{
+					"line": 144,
+					"column": 6,
+					"label": ""
+				},
+				{
+					"line": 153,
+					"column": 17,
+					"label": "要显示的字符串"
+				},
+				{
+					"line": 160,
+					"column": 13,
+					"label": "16位代码段"
+				},
+				{
+					"line": 163,
+					"column": 11,
+					"label": "程序入口"
+				},
+				{
+					"line": 264,
+					"column": 18,
+					"label": "程序出口"
+				},
+				{
+					"line": 288,
+					"column": 13,
+					"label": "32位代码段"
+				},
+				{
+					"line": 316,
+					"column": 0,
+					"label": "打开分页"
+				},
+				{
+					"line": 397,
+					"column": 1,
+					"label": "切换到任务0"
+				},
+				{
+					"line": 412,
+					"column": 0,
+					"label": ""
+				},
+				{
+					"line": 434,
+					"column": 1,
+					"label": ""
+				},
+				{
+					"line": 478,
+					"column": 1,
+					"label": ""
+				},
+				{
+					"line": 502,
+					"column": 1,
+					"label": ""
+				},
+				{
+					"line": 519,
+					"column": 0,
+					"label": ""
+				},
+				{
+					"line": 528,
+					"column": 1,
+					"label": ""
+				},
+				{
+					"line": 535,
+					"column": 1,
+					"label": ""
+				},
+				{
+					"line": 630,
+					"column": 0,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "macro.inc",
+			"bookmarks": [
+				{
+					"line": 19,
+					"column": 16,
+					"label": "DefineLDT"
+				},
+				{
+					"line": 45,
+					"column": 16,
+					"label": "DefineTSS"
+				},
+				{
+					"line": 88,
+					"column": 17,
+					"label": "DefineDATA"
+				},
+				{
+					"line": 104,
+					"column": 19,
+					"label": "DefineStack0"
+				},
+				{
+					"line": 120,
+					"column": 19,
+					"label": "DefineStack3"
+				},
+				{
+					"line": 136,
+					"column": 17,
+					"label": "DefineCode"
+				},
+				{
+					"line": 163,
+					"column": 21,
+					"label": "DefineAllStuff"
+				},
+				{
+					"line": 175,
+					"column": 47,
+					"label": "--------------"
+				},
+				{
+					"line": 176,
+					"column": 24,
+					"label": "DefineSetupPaging"
+				},
+				{
+					"line": 204,
+					"column": 17,
+					"label": "SwitchTask"
+				},
+				{
+					"line": 233,
+					"column": 16,
+					"label": "debugger"
+				}
+			]
+		},
+		{
+			"path": "pm.inc",
+			"bookmarks": [
+				{
+					"line": 192,
+					"column": 23,
+					"label": "描述符"
+				},
+				{
+					"line": 240,
+					"column": 17,
+					"label": "选择子"
+				},
+				{
+					"line": 253,
+					"column": 19,
+					"label": "分页机制"
+				},
+				{
+					"line": 297,
+					"column": 17,
+					"label": "Descriptor"
+				},
+				{
+					"line": 311,
+					"column": 9,
+					"label": "Gate"
+				}
+			]
+		},
+		{
+			"path": "lib.inc",
+			"bookmarks": [
+				{
+					"line": 4,
+					"column": 6,
+					"label": ""
+				},
+				{
+					"line": 45,
+					"column": 6,
+					"label": ""
+				},
+				{
+					"line": 76,
+					"column": 3,
+					"label": ""
+				},
+				{
+					"line": 121,
+					"column": 4,
+					"label": ""
+				},
+				{
+					"line": 135,
+					"column": 3,
+					"label": ""
+				}
+			]
+		}
+	]
+}
